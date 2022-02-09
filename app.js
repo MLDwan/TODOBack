@@ -1,34 +1,17 @@
-const express = require('express');
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const mongoose = require("mongoose");
 const app = express();
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema;
 
-const taskSchema = new Schema ({
-    text: String,
-    isCheck: Boolean
-});
+const apiRoutes = require("./src/modules/routes/routes")
+
+app.use(cors());
 
 const uri = "mongodb+srv://user:user@cluster0.x2u0b.mongodb.net/todoList?retryWrites=true&w=majority";
-mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(uri, { useUnifiedTopology: true });
 
-const Task = mongoose.model("tasks", taskSchema)
+app.use(bodyParser.json());
+app.use('/', apiRoutes);
 
-  app.get('/', (req, res) => {
-
-    const task = new Task({
-      text: '1231412',
-      isCheck: false
-    });
-    task.save().then(result => {
-      res.send(result)
-    });
-  });
-
-  app.get('/paramRequest', (req, res) => {
-    Task.find().then(result => {
-      res.send({data: result})
-    });
-  });
-
-  app.listen(8000, () => {
-  });
+app.listen(8000, () => {});
