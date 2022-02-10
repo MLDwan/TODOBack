@@ -9,7 +9,8 @@ module.exports.getAllTasks = (req, res) => {
 module.exports.createNewTask = (req, res) => {
   const task = new Task(req.body);
   task.save().then((result) => {
-    res.send("Create!!!");
+    Task.unshift(task)
+    res.send({data: result});
   });
 };
 
@@ -18,7 +19,7 @@ module.exports.deleteTask = (req, res) => {
   if (id) {
     Task.deleteOne({ _id: id }).then(() => {
       Task.find().then((result) => {
-        res.send({ data: result });
+        res.send({data: result});
       });
     });
   } else console.log("id not found");
