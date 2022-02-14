@@ -36,9 +36,11 @@ module.exports.deleteTask = (req, res) => {
 
 module.exports.changeTaskInfo = (req, res) => {
   const id = req.body.id;
-  Task.updateOne({ _id: id }, req.body).then(() => {
-    Task.find().then((result) => {
-      res.send({ data: result });
+  if (id) {
+    Task.updateOne({ _id: id }, req.body).then(() => {
+      Task.find().then((result) => {
+        res.send({ data: result });
+      });
     });
-  });
+  } else console.log("id not found");
 };
