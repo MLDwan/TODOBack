@@ -1,4 +1,3 @@
-const task = require("../../db/models/task/index");
 const Task = require("../../db/models/task/index");
 
 module.exports.getAllTasks = (req, res) => {
