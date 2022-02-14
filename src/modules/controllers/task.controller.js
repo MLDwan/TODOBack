@@ -1,3 +1,4 @@
+const task = require("../../db/models/task/index");
 const Task = require("../../db/models/task/index");
 
 module.exports.getAllTasks = (req, res) => {
@@ -6,13 +7,13 @@ module.exports.getAllTasks = (req, res) => {
       res.send({ data: result });
     });
   } catch (error) {
-    res.send(console.log(error));
+    res.status(422).send('Error! Params not correct');
   }
 };
 
 module.exports.createNewTask = (req, res) => {
   const text = req.body.text
-  if(text !== ""){
+  if( text.trim() !== "" && typeof text.trim()){
     const task = new Task(req.body);
     task.save().then((result) => {
       Task.find().then((result) => {
