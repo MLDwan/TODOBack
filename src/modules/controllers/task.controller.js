@@ -6,7 +6,7 @@ module.exports.getAllTasks = (req, res) => {
     Task.find().then((result) => {
       res.send({ data: result });
     });
-  } catch (error) {
+  } catch {
     res.status(422).send('Error! Params not correct');
   }
 };
