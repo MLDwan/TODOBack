@@ -13,7 +13,7 @@ module.exports.getAllTasks = (req, res) => {
 
 module.exports.createNewTask = (req, res) => {
   const text = req.body.text
-  if( text.trim() !== "" && typeof text.trim()){
+  if( text.trim() !== "" && typeof text === 'string'){
     const task = new Task(req.body);
     task.save().then((result) => {
       Task.find().then((result) => {
